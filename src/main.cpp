@@ -67,8 +67,8 @@ void loop() {
     display.print(t);
     display.println(F("C"));
 
-    display.print("Time:");
-    display.println(millis()/(1000*60*60));
+    // display.print("Time:");
+    // display.println(millis()/(1000*60*60)); //dado não é util
 
     display.print("SD:");
     display.println("--");
