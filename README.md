@@ -1,2 +1,2 @@
 # AlfaSense
-O AlfaSense é um sistema inteligente desenvolvido para monitorar e otimizar as condições de um cultivo hidropônico de alface.
+O AlfaSense é um sistema inteligente desenvolvido para monitorar e otimizar as condições de um cultivo hidropônico de alface. Utilizando sensores avançados, o sistema coleta dados essenciais como temperatura, umidade e fluxo de água para garantir que as plantas recebam as condições ideais para o seu crescimento. Com a automação e a análise desses dados em tempo real, o AlfaSense proporciona uma gestão eficiente, sustentável e de baixo custo para sistemas de cultivo hidropônico.
