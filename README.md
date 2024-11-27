@@ -8,11 +8,13 @@ O **AlfaSense** é um sistema inteligente desenvolvido para monitorar e otimizar
 
 ### 1. Requisitos do Projeto
 
-- Sensor de Temperatura e Umidade (DHT22)
-- Cartão SD
-- Sensor de Fluxo de Água
-- Display (LCD ou similar)
-- Notificação via celular
+- [Sensor de Temperatura e Umidade (DHT22)](https://blog.eletrogate.com/sensores-dht11-dht22/)
+- [Cartão SD](https://blog.eletrogate.com/gravacao-de-cartao-micro-sd-com-arduino/)
+- [Sensor de Fluxo de Água](https://www.robocore.net/tutoriais/usando-sensor-fluxo-de-agua?srsltid=AfmBOop5U_WtSI5_IvKNNCcCxQMp0dhDSsZdoMKUAfDzZMoC_m_Guo6d)
+- [Sensor de Tempertura da água](https://www.robocore.net/tutoriais/primeiros-passos-ds18b20-arduino?srsltid=AfmBOopOh0tPdRKgMwcXEHIK44C2FYUGw6nCdGaH6_7ZIXtDBWHG8kre)
+- [Display](https://www.makerhero.com/blog/como-conectar-display-oled-arduino/)
+- [Notificação via celular](https://iotguru.cloud/tutorials/mqttPanel)
+- [Alimentação](https://www.usinainfo.com.br/fonte-chaveada-usb-e-p4/fonte-chaveada-5v-34a-2-x-17a-usb-dupla-para-arduino-esp32-e-celular-branca-6026.html)
 
 ### 2. Teste de Componentes Separadamente
 
