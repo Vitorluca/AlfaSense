@@ -1,7 +1,10 @@
+#include <Arduino.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <DHT.h>
+
+#include "flow_sensor.h"
 
 // #include "my_font.h" //fonte personalizada
 
@@ -11,12 +14,12 @@
 #define DHTTYPE DHT22
 #define DHTPIN 4 
 
+
+
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
 DHT dht(DHTPIN, DHTTYPE);
-
-
 
 void setup() {
   Serial.begin(115200);
@@ -38,6 +41,12 @@ void setup() {
 
   Serial.println(F("DHTxx test!"));
   dht.begin();
+
+  //mensagem de inicializacao
+  Serial.println("Medidor de Fluxo e Volume de Liquidos\n");
+
+  //configuracao do pino do sensor como entrada em nivel logico alto
+  pinMode(PINO_SENSOR_FLUXO, INPUT_PULLUP);
 }
 
 void loop() {
@@ -74,6 +83,8 @@ void loop() {
     display.println("--");
 
     display.display(); //star display
+
+    calc_flow();
 
     delay(400);
     display.clearDisplay();
