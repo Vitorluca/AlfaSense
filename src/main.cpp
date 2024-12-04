@@ -5,6 +5,7 @@
 #include <DHT.h>
 
 #include "flow_sensor.h"
+#include "temperature_sensor.h"
 
 // #include "my_font.h" //fonte personalizada
 
@@ -14,12 +15,13 @@
 #define DHTTYPE DHT22
 #define DHTPIN 4 
 
-
-
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
 DHT dht(DHTPIN, DHTTYPE);
+
+
+
 
 void setup() {
   Serial.begin(115200);
@@ -47,6 +49,9 @@ void setup() {
 
   //configuracao do pino do sensor como entrada em nivel logico alto
   pinMode(PINO_SENSOR_FLUXO, INPUT_PULLUP);
+
+  Serial.println("Medindo Temperatura"); // Imprime a mensagem inicial
+  sensor.begin(); // Inicia o sensor
 }
 
 void loop() {
@@ -85,6 +90,7 @@ void loop() {
     display.display(); //star display
 
     calc_flow();
+    read_temperature();
 
     delay(400);
     display.clearDisplay();
