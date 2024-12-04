@@ -13,6 +13,7 @@ void read_temperature(){
   } else {
     Serial.print("Temperatura = "); // Imprime a temperatura no monitor serial
     Serial.println(sensor.getTempC(endereco_temp), 1); // Busca temperatura para dispositivo
+    temp_water = sensor.getTempC(endereco_temp);
   }
   delay(1000);
 }

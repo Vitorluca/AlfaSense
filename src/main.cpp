@@ -6,8 +6,8 @@
 
 #include "flow_sensor.h"
 #include "temperature_sensor.h"
+#include "sd_card.h"
 
-// #include "my_font.h" //fonte personalizada
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -52,6 +52,47 @@ void setup() {
 
   Serial.println("Medindo Temperatura"); // Imprime a mensagem inicial
   sensor.begin(); // Inicia o sensor
+
+
+  //save sd card
+  // Initialize SPI with defined pins
+  SPI.begin(18, 19, 23, SD_CS_PIN);
+
+  // Initialize SD card
+  if (!SD.begin(SD_CS_PIN)) {
+    Serial.println("Falha ao montar o cartão SD!");
+    return;
+  }
+
+  uint8_t cardType = SD.cardType();
+  if (cardType == CARD_NONE) {
+    Serial.println("Nenhum cartão SD encontrado");
+    return;
+  }
+
+  Serial.print("Tipo de Cartão SD: ");
+  if (cardType == CARD_MMC) {
+    Serial.println("MMC");
+  } else if (cardType == CARD_SD) {
+    Serial.println("SDSC");
+  } else if (cardType == CARD_SDHC) {
+    Serial.println("SDHC");
+  } else {
+    Serial.println("Desconhecido");
+  }
+
+  uint64_t cardSize = SD.cardSize() / (1024 * 1024);
+  Serial.printf("Tamanho do Cartão SD: %lluMB\n", cardSize);
+
+  // Create and write header in the file if necessary
+  File file = SD.open("/data_log.csv", FILE_READ);
+  if (!file) {
+    Serial.println("Criando arquivo data_log.csv...");
+    writeFile(SD, "/data_log.csv", "humidade,temperatura_ambiente,fluxo, temperatura_agua");  // Header h, t, fluxo, temp_water
+    
+  } else {
+    file.close();
+  }
 }
 
 void loop() {
@@ -81,9 +122,6 @@ void loop() {
     display.print(t);
     display.println(F("C"));
 
-    // display.print("Time:");
-    // display.println(millis()/(1000*60*60)); //dado não é util
-
     display.print("SD:");
     display.println("--");
 
@@ -91,6 +129,9 @@ void loop() {
 
     calc_flow();
     read_temperature();
+
+    sprintf(buffer, "%.2f,%.2f,%.2f,%.2f", h, t, fluxo, temp_water);
+    writeFile(SD, "/data_log.csv", buffer); // Save data AlfaSense
 
     delay(400);
     display.clearDisplay();

@@ -2,7 +2,7 @@
 #include "flow_sensor.h"
 
 //definicao das variaveis de fluxo e volume
-float fluxo = 0;
+
 float volume = 0;
 float volume_total = 0;
 

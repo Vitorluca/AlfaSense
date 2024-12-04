@@ -1,5 +1,7 @@
 const int PINO_ONEWIRE = 12;  // Define pino do sensor
 
+float temp_water = 0;
+
 #ifndef TEMPERATURE_SENSOR_H   // Protege o arquivo contra múltiplas inclusões
 #define TEMPERATURE_SENSOR_H
 
