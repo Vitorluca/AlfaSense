@@ -122,8 +122,11 @@ void loop() {
     display.print(t);
     display.println(F("C"));
 
-    display.print("SD:");
-    display.println("--");
+    // display.print("SD:");
+    // display.println("--");
+    
+
+
 
     display.display(); //star display
 
