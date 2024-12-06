@@ -3,3 +3,6 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
+
+#ignorar arquivo de senhas e credencias do projeto
+src/config.cpp
