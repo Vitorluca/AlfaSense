@@ -1,5 +1,5 @@
 // @author Vitorluca
-// @version 0.1
+// @version 0.5
 
 #include <Arduino.h>
 #include <Wire.h>
