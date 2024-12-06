@@ -1,5 +1,4 @@
 const int SD_CS_PIN = 5; // Pino CS (Chip Select) para o cartão SD
-char buffer[40];
 
 #include "FS.h"
 #include "SD.h"

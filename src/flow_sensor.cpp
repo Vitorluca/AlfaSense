@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "flow_sensor.h"
+#include "global_variables.h"
 
 //definicao das variaveis de fluxo e volume
 

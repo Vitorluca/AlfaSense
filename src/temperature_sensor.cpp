@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "temperature_sensor.h"
+#include "global_variables.h"
 
 // Definição dos objetos e variáveis globais
 OneWire oneWire(PINO_ONEWIRE);         // Cria o objeto OneWire com o pino configurado

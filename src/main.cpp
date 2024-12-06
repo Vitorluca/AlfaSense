@@ -1,5 +1,5 @@
-// @author
-// @version 
+// @author Vitorluca
+// @version 0.1
 
 #include <Arduino.h>
 #include <Wire.h>
@@ -10,6 +10,10 @@
 #include "flow_sensor.h"
 #include "temperature_sensor.h"
 #include "sd_card.h"
+#include "mqtt_client.h"
+
+#include "config.h"
+#include "global_variables.h"
 
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
@@ -28,6 +32,16 @@ DHT dht(DHTPIN, DHTTYPE);
 
 void setup() {
   Serial.begin(115200);
+
+  // Conecta à rede Wi-Fi
+  setup_wifi();
+
+  // Configura o servidor MQTT
+  client.setServer(mqtt_server, mqtt_port);
+  client.setCallback(callback);
+
+  // Apenas para desenvolvimento; não use em produção
+  espClient.setInsecure(); 
 
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
     Serial.println(F("SSD1306 allocation failed"));
@@ -138,8 +152,17 @@ void loop() {
 
     sprintf(buffer, "%.2f,%.2f,%.2f,%.2f", h, t, fluxo, temp_water);
     writeFile(SD, "/data_log.csv", buffer); // Save data AlfaSense
+      
+    if (!client.connected()) {
+      reconnect();
+    }
+    client.loop();
+
+  // Publica giroscopio
+  client.publish("topic/giro", buffer);
 
     delay(400);
+
     display.clearDisplay();
     display.setCursor(0, 0);  
 }
