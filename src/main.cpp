@@ -1,5 +1,13 @@
-// @author Vitorluca
-// @version 0.5
+/**
+   @file main.cpp
+   @brief Este é o arquivo principal do projeto
+   
+   @author Vitor Lucas
+   @version 0.5
+    @date 2024-12-06
+   
+   Este programa faz a conexão com WiFi e envia dados ao servidor MQTT.
+ */
 
 #include <Arduino.h>
 #include <Wire.h>
