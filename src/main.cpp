@@ -35,8 +35,8 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
 DHT dht(DHTPIN, DHTTYPE);
 
-
-
+//usado para subistituir o delay
+unsigned long startTime = millis();
 
 void setup() {
   Serial.begin(115200);
@@ -52,10 +52,11 @@ void setup() {
   espClient.setInsecure(); 
 
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
-    Serial.println(F("SSD1306 allocation failed"));
+    Serial.println(F("[SD_CARD] SSD1306 allocation failed"));
     for(;;);
   }
   delay(2000);
+
   display.clearDisplay();
 
   display.setTextSize(2);
@@ -65,16 +66,16 @@ void setup() {
 //   display.println("Hello, world!");
   display.display(); 
 
-  Serial.println(F("DHTxx test!"));
+  Serial.println(F("[DHT22] inicializando dht22"));
   dht.begin();
 
   //mensagem de inicializacao
-  Serial.println("Medidor de Fluxo e Volume de Liquidos\n");
+  Serial.println("[FLUX_SENSOR] inicializando sensor Fluxo e Volume de Liquidos\n");
 
   //configuracao do pino do sensor como entrada em nivel logico alto
   pinMode(PINO_SENSOR_FLUXO, INPUT_PULLUP);
 
-  Serial.println("Medindo Temperatura"); // Imprime a mensagem inicial
+  Serial.println("[TEMP_SENSOR] inicializando Medindo Temperatura"); // Imprime a mensagem inicial
   sensor.begin(); // Inicia o sensor
 
 
@@ -84,17 +85,17 @@ void setup() {
 
   // Initialize SD card
   if (!SD.begin(SD_CS_PIN)) {
-    Serial.println("Falha ao montar o cartão SD!");
+    Serial.println("[SD_CARD] Falha ao montar o cartão SD!");
     return;
   }
 
   uint8_t cardType = SD.cardType();
   if (cardType == CARD_NONE) {
-    Serial.println("Nenhum cartão SD encontrado");
+    Serial.println("[SD_CARD] Nenhum cartão SD encontrado");
     return;
   }
 
-  Serial.print("Tipo de Cartão SD: ");
+  Serial.print("[SD_CARD] Tipo de Cartão SD: ");
   if (cardType == CARD_MMC) {
     Serial.println("MMC");
   } else if (cardType == CARD_SD) {
@@ -106,12 +107,12 @@ void setup() {
   }
 
   uint64_t cardSize = SD.cardSize() / (1024 * 1024);
-  Serial.printf("Tamanho do Cartão SD: %lluMB\n", cardSize);
+  Serial.printf("[SD_CARD] Tamanho do Cartão SD: %lluMB\n", cardSize);
 
   // Create and write header in the file if necessary
   File file = SD.open("/data_log.csv", FILE_READ);
   if (!file) {
-    Serial.println("Criando arquivo data_log.csv...");
+    Serial.println("[SD_CARD] Criando arquivo data_log.csv...");
     writeFile(SD, "/data_log.csv", "humidade,temperatura_ambiente,fluxo, temperatura_agua");  // Header h, t, fluxo, temp_water
     
   } else {
@@ -122,13 +123,16 @@ void setup() {
 void loop() {
     delay(2000);
 
-    float h = dht.readHumidity();
-    float t = dht.readTemperature();
+    float h = dht.readHumidity(); //humidade
+    float t = dht.readTemperature(); //temperatura
+
+    calc_flow(); //fluxo de agua
+    read_temperature(); //temperatura da água
 
 
       // Check if any reads failed and exit early (to try again).
   if (isnan(h) || isnan(t)) {
-    Serial.println(F("Failed to read from DHT sensor!"));
+    Serial.println(F("[DHT22] Failed to read from DHT sensor!"));
     return;
   }
     Serial.println('\n');
@@ -138,35 +142,53 @@ void loop() {
     Serial.print(t);
     Serial.println(F("°C "));
 
+
+
     //print display oled 
     display.print("H: ");
-    display.print(h);
+    display.print(h); //HUMIDADE
     display.println(F("%"));
     display.print("T: ");
-    display.print(t);
+    display.print(t); //TEMPERATURA
     display.println(F("C"));
-
-    // display.print("SD:");
-    // display.println("--");
-    
-
-
+    display.print("F: ");
+    display.print(fluxo); //FLUXO DA AGUA
+    display.println(" L/min");
+    display.print("W: ");
+    display.print(temp_water); //FLUXO DA AGUA
+    display.println(" C");
 
     display.display(); //star display
 
-    calc_flow();
-    read_temperature();
-
-    sprintf(buffer, "%.2f,%.2f,%.2f,%.2f", h, t, fluxo, temp_water);
+    sprintf(buffer,"%.2f,%.2f,%.2f,%.2f", h, t, fluxo, temp_water);
     writeFile(SD, "/data_log.csv", buffer); // Save data AlfaSense
       
     if (!client.connected()) {
       reconnect();
     }
     client.loop();
+    
+    // Publica humidade
+    memset(buffer, 0, sizeof(buffer)); //zera buffer
+    sprintf(buffer, "%.2f", h);
+    client.publish("topic/humidade", buffer);
 
-  // Publica giroscopio
-  client.publish("topic/giro", buffer);
+    // Publica temperatura ambiente
+    memset(buffer, 0, sizeof(buffer)); //zera buffer
+    sprintf(buffer, "%.2f", t);
+    client.publish("topic/temp_ambiente", buffer);
+
+    // Publica fluxo de agua
+    memset(buffer, 0, sizeof(buffer)); //zera buffer
+    sprintf(buffer, "%.2f", fluxo);
+    client.publish("topic/fluxo", buffer);
+
+    // Publica temperatura da agua
+    memset(buffer, 0, sizeof(buffer)); //zera buffer
+    sprintf(buffer, "%.2f", temp_water);
+    client.publish("topic/temp_water", buffer);
+
+    memset(buffer, 0, sizeof(buffer)); //zera buffer
 
     delay(400);
 
