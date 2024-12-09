@@ -10,9 +10,9 @@ DeviceAddress endereco_temp;           // Define o endereço do sensor (o endere
 void read_temperature(){
     sensor.requestTemperatures(); // Envia comando para realizar a conversão de temperatura
   if (!sensor.getAddress(endereco_temp,0)) { // Encontra o endereco do sensor no barramento
-    Serial.println("SENSOR NAO CONECTADO"); // Sensor conectado, imprime mensagem de erro
+    Serial.println("[TEMP_SENSOR] SENSOR NAO CONECTADO"); // Sensor conectado, imprime mensagem de erro
   } else {
-    Serial.print("Temperatura = "); // Imprime a temperatura no monitor serial
+    Serial.print("[TEMP_SENSOR] Temperatura: "); // Imprime a temperatura no monitor serial
     Serial.println(sensor.getTempC(endereco_temp), 1); // Busca temperatura para dispositivo
     temp_water = sensor.getTempC(endereco_temp);
   }
