@@ -36,7 +36,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 DHT dht(DHTPIN, DHTTYPE);
 
 //usado para subistituir o delay
-unsigned long startTime = millis();
+// unsigned long startTime = millis();
 
 void setup() {
   Serial.begin(115200);
