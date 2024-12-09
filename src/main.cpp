@@ -56,7 +56,6 @@ void setup() {
     for(;;);
   }
   delay(2000);
-//   display.setFont(&myFont); // Usando a fonte personalizada
   display.clearDisplay();
 
   display.setTextSize(2);
