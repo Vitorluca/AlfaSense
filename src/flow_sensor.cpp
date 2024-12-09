@@ -25,21 +25,9 @@ void calc_flow(){
         fluxo = ((1000.0 / (millis() - tempo_antes)) * contador) / FATOR_CALIBRACAO;
 
         //exibicao do valor de fluxo
-        Serial.print("Fluxo de: ");
+        Serial.print("[FLUX_SENSOR] Fluxo de: ");
         Serial.print(fluxo);
         Serial.println(" L/min");
-
-        //calculo do volume em L passado pelo sensor
-        volume = fluxo / 60;
-
-        //armazenamento do volume
-        volume_total += volume;
-
-        //exibicao do valor de volume
-        Serial.print("Volume: ");
-        Serial.print(volume_total);
-        Serial.println(" L");
-        Serial.println();
 
         //reinicializacao do contador de pulsos
         contador = 0;
