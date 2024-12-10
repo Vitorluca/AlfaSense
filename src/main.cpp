@@ -171,12 +171,12 @@ void loop() {
     // Publica humidade
     memset(buffer, 0, sizeof(buffer)); //zera buffer
     sprintf(buffer, "%.2f", h);
-    client.publish("topic/humidade", buffer);
+    client.publish("dht22/humidade", buffer);
 
     // Publica temperatura ambiente
     memset(buffer, 0, sizeof(buffer)); //zera buffer
     sprintf(buffer, "%.2f", t);
-    client.publish("topic/temp_ambiente", buffer);
+    client.publish("dht22/temp_ambiente", buffer);
 
     // Publica fluxo de agua
     memset(buffer, 0, sizeof(buffer)); //zera buffer
