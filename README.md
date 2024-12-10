@@ -36,3 +36,41 @@ O **AlfaSense** é um sistema inteligente desenvolvido para monitorar e otimizar
 - Ajustes finais na programação e nos parâmetros do sistema.
 - Verificação de desempenho e otimização do sistema para uso real.
 - Testes finais para garantir a estabilidade e a funcionalidade do sistema.
+
+
+## Lista de Portas GPIO Utilizadas
+
+### 1. SD card(SPI)
+
+- 18 (SCK)
+- 19 (MISO)
+- 23 (MOSI)
+- 5 (CS)
+- GND
+- 5V
+
+### 2. Sensor Temperatura água
+
+- GND
+- 5V
+- 12 (DATA)
+
+### 3. Sensor de Fluxo
+
+- GND
+- 5V
+- 2 (DATA)
+
+### 4. Sensor DHT22
+
+- GND
+- 5V
+- 4 (DATA)
+
+### 5. Display (I2C)
+
+- 21 (SDA)
+- 22 (SCL)
+- GND
+- 3.3V
+
