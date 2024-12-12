@@ -1,6 +1,6 @@
 //definicao do pino do sensor e de interrupcao
 const int INTERRUPCAO_SENSOR = 0; //interrupt = 0 equivale ao pino digital 2
-const int PINO_SENSOR_FLUXO = 2;
+const int PINO_SENSOR_FLUXO = 15;
 
 //definicao do fator de calibracao para conversao do valor lido
 const float FATOR_CALIBRACAO = 4.5;
