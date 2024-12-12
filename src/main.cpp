@@ -3,7 +3,7 @@
    @brief Este é o arquivo principal do projeto
    
    @author Vitor Lucas
-   @version 0.5
+   @version 1.0
     @date 2024-12-06
    
    Este programa faz a conexão com WiFi e envia dados ao servidor MQTT.
