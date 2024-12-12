@@ -8,7 +8,7 @@ float volume = 0;
 float volume_total = 0;
 
 //definicao da variavel de contagem de voltas
-unsigned long contador = 0;
+ unsigned  long contador = 0;
 
 //definicao da variavel de intervalo de tempo
 unsigned long tempo_antes = 0;
