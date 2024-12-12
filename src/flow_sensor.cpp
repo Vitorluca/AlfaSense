@@ -4,6 +4,8 @@
 
 //definicao das variaveis de fluxo e volume
 
+#define VALUE_ERROR_SENSOR 492.26
+
 float volume = 0;
 float volume_total = 0;
 
@@ -23,6 +25,7 @@ void calc_flow(){
 
         //conversao do valor de pulsos para L/min
         fluxo = ((1000.0 / (millis() - tempo_antes)) * contador) / FATOR_CALIBRACAO;
+        fluxo = fluxo - VALUE_ERROR_SENSOR;
 
         //exibicao do valor de fluxo
         Serial.print("[FLUX_SENSOR] Fluxo de: ");
