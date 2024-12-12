@@ -30,8 +30,11 @@
 #define DHTTYPE DHT22
 #define DHTPIN 4 
 
+#define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+#define SCREEN_ADDRESS 0x3C
+
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -51,15 +54,17 @@ void setup() {
   // Apenas para desenvolvimento; não use em produção
   espClient.setInsecure(); 
 
-  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
-    Serial.println(F("[SD_CARD] SSD1306 allocation failed"));
+  if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) { // Address 0x3D for 128x64
+  // delay(1000);
+    Serial.println(F("[DISPLAY] Falha ao iniciar o display"));
     for(;;);
   }
   delay(2000);
 
   display.clearDisplay();
 
-  display.setTextSize(2);
+  display.setTextSize(2); //2
+  
   display.setTextColor(WHITE);
   display.setCursor(0, 0); //(0,10)
   // Display static text
@@ -143,7 +148,6 @@ void loop() {
     Serial.println(F("°C "));
 
 
-
     //print display oled 
     display.print("H: ");
     display.print(h); //HUMIDADE
@@ -158,7 +162,12 @@ void loop() {
     display.print(temp_water); //FLUXO DA AGUA
     display.println(" C");
 
-    display.display(); //star display
+    display.display(); //start display
+
+    delay(100);
+
+    display.clearDisplay();
+    display.setCursor(0, 0);
 
     sprintf(buffer,"%.2f,%.2f,%.2f,%.2f", h, t, fluxo, temp_water);
     writeFile(SD, "/data_log.csv", buffer); // Save data AlfaSense
