@@ -59,7 +59,7 @@ O **AlfaSense** é um sistema inteligente desenvolvido para monitorar e otimizar
 
 - GND
 - 5V
-- 2 (DATA)
+- 15 (DATA)
 
 ### 4. Sensor DHT22
 
