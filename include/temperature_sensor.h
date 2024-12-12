@@ -1,4 +1,4 @@
-const int PINO_ONEWIRE = 12;  // Define pino do sensor
+const int PINO_ONEWIRE = 14;  // Define pino do sensor
 
 #ifndef TEMPERATURE_SENSOR_H   // Protege o arquivo contra múltiplas inclusões
 #define TEMPERATURE_SENSOR_H

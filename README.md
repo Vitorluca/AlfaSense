@@ -53,7 +53,7 @@ O **AlfaSense** é um sistema inteligente desenvolvido para monitorar e otimizar
 
 - GND
 - 5V
-- 12 (DATA)
+- 14 (DATA)
 
 ### 3. Sensor de Fluxo
 
