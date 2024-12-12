@@ -63,7 +63,7 @@ void setup() {
 
   display.clearDisplay();
 
-  display.setTextSize(2); //2
+  display.setTextSize(1); //2
   
   display.setTextColor(WHITE);
   display.setCursor(0, 0); //(0,10)
